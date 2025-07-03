@@ -74,7 +74,8 @@
         max-width: 1100px;
         margin: 0px auto; /* Margen superior e inferior reducido */
         padding: 0 20px;
-        position: relative;
+        /* Añadido para asegurar que el contenido esté debajo de la navbar en móviles */
+        padding-top: 20px; /* Padding por defecto, ajustado en media queries */
     }
 
     /* --- Tarjeta de Introducción --- */
@@ -351,7 +352,7 @@
     .faq-items details:hover { transform: scale(1.02); border-color: var(--border-color); }
     .faq-items summary { font-weight: bold; cursor: pointer; font-size: 1.1em; display: flex; align-items: center; justify-content: space-between; }
     .faq-items summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; transition: transform 0.3s ease; }
-    .faq-items details[open] summary::after { transform: rotate(180deg); }
+    .faq-items details[open] summary::after { content: '\f077'; } /* Cambia el icono a flecha hacia arriba cuando está abierto */
     .faq-items p { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-color); }
 
     /* --- Alertas y Mensajes --- */
@@ -368,17 +369,134 @@
     /* --- Responsividad --- */
     @media (max-width: 992px) {
         .contact-grid { grid-template-columns: 1fr; }
+        .content-wrapper {
+            padding: 0 15px; /* Ajustar padding lateral */
+            padding-top: 10px; /* Margen superior para la navbar en tablets */
+        }
+        .intro-card {
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .intro-card h1 {
+            font-size: 2.5em;
+        }
+        .intro-card p {
+            font-size: 1.05em;
+        }
+        .animated-section {
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .section-header {
+            font-size: 1.4em;
+        }
     }
     @media (max-width: 768px) {
-        .content-wrapper { margin: 1rem auto; padding: 0 10px; }
+        .content-wrapper { 
+            margin: 0 auto; /* Eliminar margen superior del auto */
+            padding: 0 10px; 
+            padding-top: 10px; /* Margen superior para la navbar en móviles */
+        }
         .animated-section { padding: 1.5rem; }
-        .intro-card h1 { font-size: 2.2em; }
+        .intro-card h1 { font-size: 2em; }
+        .intro-card p { font-size: 1em; }
         .section-header { font-size: 1.2em; }
         .reply-item {
             margin-left: 10px; /* Reduce indent on smaller screens */
         }
+        .form-control {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+        .btn-primary {
+            padding: 12px 15px;
+            font-size: 1em;
+        }
+        .user-photo {
+            width: 40px;
+            height: 40px;
+        }
+        .reply-header .user-photo {
+            width: 28px;
+            height: 28px;
+        }
+        .social-media-links a {
+            width: 45px;
+            height: 45px;
+            font-size: 1.3em;
+        }
+        .faq-items summary {
+            font-size: 1em;
+        }
+    }
+    @media (max-width: 576px) {
+        .content-wrapper {
+            padding: 0 5px; /* Padding más pequeño en pantallas muy pequeñas */
+            padding-top: 10px; /* Mantener el margen superior para la navbar */
+        }
+        .intro-card {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .intro-card h1 {
+            font-size: 1.8em;
+        }
+        .intro-card p {
+            font-size: 0.9em;
+        }
+        .animated-section {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-header {
+            font-size: 1.1em;
+            flex-direction: column; /* Apilar icono y texto del encabezado */
+            text-align: center;
+        }
+        .section-header i {
+            margin-bottom: 5px;
+        }
+        .post-item {
+            padding: 1rem;
+        }
+        .post-body h4 {
+            font-size: 1.1em;
+        }
+        .post-body p {
+            font-size: 0.9em;
+        }
+        .reply-item {
+            margin-left: 5px; /* Indent aún menor para respuestas */
+            padding: 0.8rem;
+        }
+        .btn-primary, .btn-reply {
+            font-size: 0.9em;
+            padding: 10px;
+        }
+        .form-control {
+            padding: 10px;
+            font-size: 0.9em;
+        }
+        .contact-info-item {
+            flex-direction: column; /* Apilar icono y texto de contacto */
+            text-align: center;
+            align-items: center;
+        }
+        .contact-info-item .icon-container {
+            margin-bottom: 5px;
+        }
+        .social-media-links {
+            gap: 10px; /* Reducir espacio entre iconos de redes sociales */
+        }
+        .social-media-links a {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+        }
     }
 </style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <main class="content-wrapper">
     
