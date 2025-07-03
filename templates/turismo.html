@@ -47,7 +47,7 @@
     /* --- Contenedor Principal y Estructura --- */
     .content-wrapper {
         max-width: 1200px;
-        margin: 0px auto;
+        margin: 10px auto 0 auto; /* Margen superior de 10px y centrado */
         padding: 0 20px;
         position: relative;
     }
@@ -284,6 +284,87 @@
         transform: scale(1.1) rotate(90deg);
         background-color: var(--dark-text);
         color: white;
+    }
+
+    /* --- Media Queries para Responsividad --- */
+    @media (max-width: 768px) {
+        .content-wrapper {
+            padding: 0 15px; /* Reduce el padding en pantallas más pequeñas */
+        }
+
+        .page-header h1 {
+            font-size: 2.5em; /* Reduce el tamaño del título principal */
+        }
+
+        .page-header p {
+            font-size: 1em; /* Reduce el tamaño del texto de descripción */
+        }
+
+        .content-card {
+            padding: 1.5rem 1.5rem; /* Ajusta el padding de las tarjetas de contenido */
+        }
+
+        .places-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ajusta el tamaño mínimo de las tarjetas */
+            gap: 1rem; /* Reduce el espacio entre las tarjetas */
+        }
+
+        .place-card-title {
+            font-size: 1.2em; /* Reduce el tamaño del título de la tarjeta */
+        }
+
+        .place-card-text {
+            font-size: 0.9em; /* Reduce el tamaño del texto de la tarjeta */
+        }
+
+        /* Ajustes para el modal 360 en pantallas más pequeñas */
+        .vr-content-box {
+            width: 95vw; /* Ocupa casi todo el ancho */
+            height: 85vh; /* Ocupa más altura */
+            padding: 10px; /* Reduce el padding interno */
+        }
+
+        #closeIframe {
+            bottom: -15px; /* Ajusta la posición del botón de cerrar */
+            left: 50%; /* Centra el botón */
+            transform: translateX(-50%); /* Ajusta para centrarlo */
+            width: 40px;
+            height: 40px;
+            font-size: 1.3em;
+        }
+        #closeIframe:hover {
+            transform: translateX(-50%) scale(1.1) rotate(90deg); /* Mantiene el centrado al hacer hover */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .page-header h1 {
+            font-size: 2em; /* Más reducción para pantallas muy pequeñas */
+        }
+
+        .page-header p {
+            font-size: 0.9em;
+        }
+
+        .content-card {
+            padding: 1rem 1rem;
+        }
+
+        #map {
+            height: 350px; /* Reduce la altura del mapa en móviles */
+        }
+
+        .places-grid {
+            grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+        }
+
+        .place-card-img {
+            height: 180px; /* Ajusta la altura de la imagen en las tarjetas */
+        }
+
+        .place-card-body {
+            padding: 1rem;
+        }
     }
 
 </style>
