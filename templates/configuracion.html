@@ -375,13 +375,13 @@
     /* Contenedor principal de la página de perfil */
     .profile-page-container {
         display: flex;
+        flex-direction: column; /* Cambiado a columna para móvil */
         gap: 2rem;
         padding: 2rem;
         font-family: 'Segoe UI', 'Roboto', sans-serif; /* Consistente con la nueva fuente */
         background-color: transparent; /* El fondo se manejará con body::before */
-        align-items: flex-start;
-        flex-wrap: wrap;
-        margin-top: 2rem; /* Ajuste para el margen superior */
+        align-items: center; /* Centrar elementos en columna */
+        margin-top: 10px; /* Margen superior de 10px */
         animation: fadeInScale 1s ease-out forwards; /* Aplicar animación de entrada */
         opacity: 0;
         transform: translateY(20px);
@@ -394,40 +394,49 @@
         padding: 2rem;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
         transition: all 0.3s ease;
-        flex-grow: 1;
+        width: 100%; /* Ocupar todo el ancho disponible */
+        max-width: 500px; /* Limitar el ancho máximo para pantallas más grandes */
         border: 1px solid var(--border-color); /* Borde transparente oscuro */
         backdrop-filter: blur(8px); /* Efecto "glass" */
         -webkit-backdrop-filter: blur(8px);
     }
     
     .profile-card {
-        flex-basis: 350px;
-        position: sticky;
-        top: 2rem;
+        position: static; /* No sticky en móvil para evitar problemas de scroll */
+        top: auto;
     }
 
     .history-card {
-        flex-basis: 500px;
+        margin-top: 2rem; /* Espacio entre tarjetas */
     }
 
     .recommendation-card {
-        flex-basis: 500px; /* Ancho similar al historial */
+        margin-top: 2rem; /* Espacio entre tarjetas */
+    }
+
+    @media (min-width: 992px) { /* Volver al layout original para pantallas más grandes */
+        .profile-page-container {
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center; /* Centrar el contenido horizontalmente */
+        }
+        .profile-card {
+            flex-basis: 350px;
+            position: sticky;
+            top: 2rem;
+            max-width: none; /* Eliminar el max-width para el layout de desktop */
+        }
+        .history-card, .recommendation-card {
+            flex-basis: 500px;
+            max-width: none; /* Eliminar el max-width para el layout de desktop */
+        }
+        .history-card, .recommendation-card {
+            margin-top: 0; /* Eliminar el margen superior extra en desktop */
+        }
     }
 
     @media (max-width: 1200px) {
-        .history-card, .recommendation-card {
-            flex-basis: 100%; 
-        }
-    }
-
-    @media (max-width: 992px) {
-        .profile-page-container {
-            flex-direction: column;
-        }
-        .profile-card {
-            position: static;
-            width: 100%;
-        }
+        /* Ya está cubierto por el estilo base de .profile-card, .history-card, .recommendation-card */
     }
 
     .profile-card__title, .history-card__title, .recommendation-card__title {
@@ -563,6 +572,7 @@
     }
     .buttons-container { 
         display: flex; 
+        flex-direction: column; /* Botones apilados en móvil */
         gap: 1rem; 
         margin-top: 2rem; 
     }
@@ -598,6 +608,12 @@
     }
     .btn-secondary-custom:hover { 
         background-color: rgba(189, 195, 199, 0.8); 
+    }
+
+    @media (min-width: 600px) { /* Volver a botones en fila para pantallas más grandes */
+        .buttons-container {
+            flex-direction: row;
+        }
     }
 
     /* Historial de lugares visitados (adaptados) */
