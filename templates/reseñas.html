@@ -626,7 +626,242 @@ body::-webkit-scrollbar-thumb:hover {
         height: 90vh;
     }
 }
+
+/* Media Queries para Responsividad */
+@media (max-width: 992px) {
+    .contenedor {
+        flex-direction: column; /* Apilar el mapa y el formulario en pantallas más pequeñas */
+        height: auto; /* Altura automática para permitir el scroll */
+        max-width: 90%; /* Ajustar el ancho máximo */
+        margin: 15px auto; /* Reducir margen superior/inferior */
+    }
+
+    #mapa {
+        width: 100%; /* El mapa ocupa todo el ancho */
+        height: 50vh; /* Altura fija para el mapa en móviles */
+        border-right: none; /* Eliminar el borde derecho */
+        border-bottom: 1px solid var(--dark-border-color); /* Añadir borde inferior */
+    }
+
+    .formulario {
+        width: 100%; /* El formulario ocupa todo el ancho */
+        padding: 15px; /* Reducir el padding */
+    }
+
+    .formulario h2, .formulario h3 {
+        font-size: 1.3rem; /* Ajustar tamaño de fuente para títulos */
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    .formulario label {
+        font-size: 0.85rem; /* Ajustar tamaño de fuente para etiquetas */
+    }
+
+    .formulario input, .formulario textarea, .formulario select {
+        padding: 10px; /* Aumentar el padding para facilitar el toque */
+        font-size: 0.95rem; /* Ajustar tamaño de fuente para campos */
+    }
+
+    .formulario button[type="submit"] {
+        padding: 12px; /* Aumentar el padding del botón */
+        font-size: 1rem; /* Ajustar tamaño de fuente del botón */
+    }
+
+    .reseña-item {
+        padding: 12px; /* Aumentar padding de las reseñas */
+    }
+
+    .user-photo {
+        width: 35px; /* Ajustar tamaño de foto de usuario */
+        height: 35px;
+    }
+
+    .reseña-body {
+        font-size: 0.9rem; /* Ajustar tamaño de fuente del cuerpo de la reseña */
+    }
+
+    .ranking-item {
+        padding-left: 40px; /* Ajustar padding para el icono de copa */
+        font-size: 0.95rem; /* Ajustar tamaño de fuente del ranking */
+    }
+
+    .ranking-item::before {
+        font-size: 1.3em; /* Ajustar tamaño del icono de copa */
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 5px; /* Reducir el padding del body */
+    }
+
+    .contenedor {
+        width: 98%; /* Ocupar casi todo el ancho disponible */
+        margin: 10px auto; /* Márgenes más pequeños */
+    }
+
+    #mapa {
+        height: 40vh; /* Reducir la altura del mapa */
+    }
+
+    .formulario {
+        padding: 10px; /* Reducir aún más el padding del formulario */
+    }
+
+    .formulario h2, .formulario h3 {
+        font-size: 1.2rem;
+    }
+
+    .formulario label {
+        font-size: 0.8rem;
+    }
+
+    .formulario input, .formulario textarea, .formulario select {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .formulario button[type="submit"] {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .reseña-item {
+        padding: 10px;
+    }
+
+    .user-photo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .reseña-body {
+        font-size: 0.85rem;
+    }
+
+    .ranking-item {
+        padding-left: 35px;
+        font-size: 0.9rem;
+    }
+
+    .ranking-item::before {
+        font-size: 1.2em;
+        left: 8px; /* Ajustar la posición del icono de copa */
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding: 0; /* Eliminar padding del body en pantallas muy pequeñas */
+    }
+
+    .contenedor {
+        width: 100%; /* Ocupar todo el ancho */
+        margin: 0 auto; /* Eliminar márgenes */
+        border-radius: 0; /* Eliminar bordes redondeados para ocupar toda la pantalla */
+        min-height: 100vh; /* Asegurar que el contenedor ocupe toda la altura */
+    }
+
+    #mapa {
+        height: 35vh; /* Altura mínima para el mapa */
+    }
+
+    .formulario {
+        padding: 10px;
+    }
+
+    .formulario h2, .formulario h3 {
+        font-size: 1.1rem;
+        text-align: center; /* Centrar títulos */
+    }
+
+    .formulario label {
+        font-size: 0.75rem;
+        justify-content: center; /* Centrar etiquetas con iconos */
+    }
+
+    .formulario input, .formulario textarea, .formulario select {
+        font-size: 0.85rem;
+    }
+
+    .formulario button[type="submit"] {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    .reseña-item {
+        padding: 8px;
+        flex-direction: column; /* Apilar elementos de la reseña */
+        align-items: flex-start;
+    }
+
+    .reseña-header {
+        width: 100%;
+        justify-content: center; /* Centrar la foto y el nombre del usuario */
+        margin-bottom: 5px;
+    }
+
+    .user-photo {
+        width: 28px;
+        height: 28px;
+        margin-right: 5px;
+    }
+
+    .user-name {
+        font-size: 0.8rem;
+    }
+
+    .reseña-body {
+        font-size: 0.8rem;
+        text-align: center; /* Centrar el texto de la reseña */
+        width: 100%;
+    }
+
+    .reseña-body strong {
+        display: block; /* Asegurar que los fuertes estén en su propia línea */
+    }
+
+    .estrellas {
+        margin-left: 0;
+        display: block;
+        text-align: center;
+    }
+
+    .ranking-item {
+        padding: 8px 5px;
+        padding-left: 30px;
+        font-size: 0.85rem;
+        flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+        justify-content: center;
+    }
+
+    .ranking-item::before {
+        font-size: 1em;
+        left: 5px;
+        top: 10px; /* Ajustar posición superior del icono de copa */
+        transform: translateY(0);
+    }
+
+    .nombre-lugar {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .ranking-info {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .puntuacion-num {
+        font-size: 0.9rem;
+    }
+}
+
+/* Asegurar que el viewport meta tag esté presente para la responsividad */
 </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- El div `dynamic-background` ya no es necesario para el efecto de blur, se gestiona directamente en el body y su pseudo-elemento. -->
 <!-- <div id="dynamic-background" class="background-blur"></div> -->
@@ -666,12 +901,6 @@ body::-webkit-scrollbar-thumb:hover {
         });
     });
 </script>
-
-
-
-
-
-
 
 
 
