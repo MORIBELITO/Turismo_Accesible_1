@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Web Turismo - Login / Registro</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rljxXtqP0s/bVq8+7N2yL1t/eD1K/0/3e+fL3i8j/bN5jW1+K1z/1W4g+7K+A6e+bF/4w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{ url_for('static', filename='styles-login.css') }}">
   <style>
-    /* Este CSS en línea puede ser movido a styles-login.css para una mejor organización */
+    /* Estilos originales para el botón de Google y el footer */
     .google-button {
       display: flex;
       align-items: center;
@@ -34,15 +34,82 @@
     footer {
       display: none;
     }
-    /* Estilos corregidos para los textos de registro/login */
+
+    /* Estilos corregidos para los textos de registro/login (manteniendo el subrayado) */
     #showRegister,
     #showLogin {
-        /* Se mantiene display, position, margin-top, font-weight, font-size,
-           cursor, user-select, padding, z-index, line-height, transition, white-space
-           del CSS externo.
-           Solo se añade text-decoration aquí para asegurar que aparezca subrayado.
-           El color ya se gestiona por el CSS externo con !important */
         text-decoration: underline; /* Agregado para asegurar el subrayado */
+    }
+
+    /* Mensajes de error (estilo original) */
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      text-align: center; /* Centrar el texto de error */
+    }
+
+    /* Media Queries para responsividad (conservados y ajustados) */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column; /* Apila el texto y el formulario en pantallas pequeñas */
+        width: 95%; /* Ocupa más ancho en pantallas pequeñas */
+        margin: 10px auto; /* Ajusta el margen */
+      }
+
+      .hero-text {
+        padding: 30px;
+        width: 100%; /* Ocupa todo el ancho disponible */
+      }
+
+      .hero-text h1 {
+        font-size: 2.5em; /* Tamaño de fuente más pequeño para móviles */
+      }
+
+      .hero-text p {
+        font-size: 1em;
+      }
+
+      .login-form {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        padding: 30px;
+        /* Mantener el border-radius original si no se especifica en styles-login.css */
+        /* Si styles-login.css ya tiene un border-radius para .login-form, este se aplicará */
+        margin-top: -15px; /* Superpone ligeramente para un mejor look */
+      }
+
+      .login-form h2 {
+        font-size: 1.8em;
+      }
+
+      .login-form form,
+      .google-button {
+        max-width: 100%; /* Permite que los elementos se estiren en móvil */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 2em;
+      }
+
+      .hero-text p {
+        font-size: 0.9em;
+      }
+
+      .login-form {
+        padding: 20px;
+      }
+
+      .login-form h2 {
+        font-size: 1.5em;
+      }
+
+      .login-form input,
+      .login-form button[type="submit"],
+      .google-button {
+        padding: 10px;
+        font-size: 0.95em;
+      }
     }
   </style>
 </head>
@@ -70,10 +137,9 @@
         <label for="loginPassword">Contraseña</label>
         <input type="password" id="loginPassword" required />
         <button type="submit">Iniciar Sesión con Email</button>
-        <p id="loginErrorMsg" style="color: red; margin-top: 10px;"></p>
+        <p id="loginErrorMsg" class="error-message"></p>
       </form>
 
-      <!-- SE CAMBIÓ AQUÍ: ELIMINADO style="color: white;" -->
       <p style="margin-top: 15px; text-align: center;">
         ¿No tienes una cuenta?
         <span id="showRegister">
@@ -96,9 +162,8 @@
         <label for="registerPassword">Contraseña</label>
         <input type="password" id="registerPassword" required minlength="6" />
         <button type="submit">Crear Cuenta</button>
-        <p id="registerErrorMsg" style="color: red; margin-top: 10px;"></p>
+        <p id="registerErrorMsg" class="error-message"></p>
       </form>
-      <!-- SE CAMBIÓ AQUÍ: ELIMINADO style="color: white;" -->
       <p style="margin-top: 15px; text-align: center;">
         ¿Ya tienes cuenta?
         <span id="showLogin">
@@ -121,14 +186,13 @@
       signInWithPopup,
       createUserWithEmailAndPassword,
       onAuthStateChanged
-      // signOut // No necesitamos signOut aquí para la lógica de redirección
     } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyARMkC0EBYElA8wVOpefSgMD4oADAIqD4o",
       authDomain: "turismo-4e958.firebaseapp.com",
       projectId: "turismo-4e958",
-      storageBucket: "turismo-4e958.firebasestorage.app",
+      storageBucket: "turismo-4e958.appspot.com",
       messagingSenderId: "442508451378",
       appId: "1:442508451378:web:65bed298dffe5b22e6262b",
       measurementId: "G-XSDKJ73NKW"
@@ -137,10 +201,9 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // MODIFICACIÓN CLAVE 1: Redirigir si ya hay un usuario logueado en la página de login
+    // Redirigir si ya hay un usuario logueado en la página de login
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // Si hay un usuario logueado, redirigir a la página principal
         window.location.href = "/principal";
       }
     });
@@ -175,31 +238,40 @@
       signInWithPopup(auth, provider)
         .then((result) => {
           console.log("Login con Google exitoso:", result.user);
-          window.location.href = "/principal"; // Redirige a la página principal
+          window.location.href = "/principal";
         })
         .catch((error) => {
           console.error("Error al iniciar sesión con Google:", error);
-          // Usar una modal en lugar de alert
-          const errorMessage = "Error al iniciar sesión con Google: " + error.message;
-          // Implementar aquí la lógica para mostrar un mensaje en la UI, por ejemplo, un div temporal.
-          console.error(errorMessage); // Para depuración
+          let errorMessage = "Ocurrió un error al iniciar sesión con Google. Por favor, inténtalo de nuevo.";
+          if (error.code === 'auth/popup-closed-by-user') {
+            errorMessage = "La ventana de inicio de sesión de Google fue cerrada. Por favor, inténtalo de nuevo.";
+          } else if (error.code === 'auth/cancelled-popup-request') {
+            errorMessage = "Ya hay una solicitud de inicio de sesión en progreso. Por favor, espera o inténtalo de nuevo.";
+          } else if (error.code === 'auth/operation-not-allowed') {
+            errorMessage = "El inicio de sesión con Google no está habilitado. Contacta al administrador.";
+          }
+          loginErrorMsg.textContent = errorMessage; // Muestra el error en el formulario de login
         });
     });
 
-    // MODIFICACIÓN CLAVE 2: Eliminar signOut después del registro con Google
     document.getElementById("googleRegister").addEventListener("click", () => {
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
         .then((result) => {
           console.log("Registro con Google exitoso:", result.user);
-          window.location.href = "/principal"; // Redirige directamente a la página principal
+          window.location.href = "/principal";
         })
         .catch((error) => {
           console.error("Error al registrarse con Google:", error);
-          // Usar una modal en lugar de alert
-          const errorMessage = "Error al registrarse con Google: " + error.message;
-          // Implementar aquí la lógica para mostrar un mensaje en la UI, por ejemplo, un div temporal.
-          console.error(errorMessage); // Para depuración
+          let errorMessage = "Ocurrió un error al registrarse con Google. Por favor, inténtalo de nuevo.";
+          if (error.code === 'auth/popup-closed-by-user') {
+            errorMessage = "La ventana de registro de Google fue cerrada. Por favor, inténtalo de nuevo.";
+          } else if (error.code === 'auth/cancelled-popup-request') {
+            errorMessage = "Ya hay una solicitud de registro en progreso. Por favor, espera o inténtalo de nuevo.";
+          } else if (error.code === 'auth/operation-not-allowed') {
+            errorMessage = "El registro con Google no está habilitado. Contacta al administrador.";
+          }
+          registerErrorMsg.textContent = errorMessage; // Muestra el error en el formulario de registro
         });
     });
 
@@ -211,7 +283,7 @@
       const password = loginForm.loginPassword.value.trim();
 
       if (!email || !password) {
-        loginErrorMsg.textContent = "Por favor ingresa correo y contraseña.";
+        loginErrorMsg.textContent = "Por favor ingresa tu correo y contraseña.";
         return;
       }
 
@@ -220,19 +292,18 @@
           window.location.href = "/principal";
         })
         .catch((error) => {
-          if (error.code === 'auth/user-not-found') {
-            loginErrorMsg.textContent = "Usuario no encontrado.";
-          } else if (error.code === 'auth/wrong-password') {
-            loginErrorMsg.textContent = "Contraseña incorrecta.";
+          let errorMessage = "Ocurrió un error al iniciar sesión. Por favor, verifica tus credenciales.";
+          if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+            errorMessage = "Correo o contraseña incorrectos. Por favor, inténtalo de nuevo.";
           } else if (error.code === 'auth/invalid-email') {
-            loginErrorMsg.textContent = "Correo no válido.";
-          } else {
-            loginErrorMsg.textContent = error.message;
+            errorMessage = "El formato del correo electrónico no es válido.";
+          } else if (error.code === 'auth/user-disabled') {
+            errorMessage = "Tu cuenta ha sido deshabilitada. Contacta al soporte.";
           }
+          loginErrorMsg.textContent = errorMessage;
         });
     });
 
-    // MODIFICACIÓN CLAVE 3: Eliminar signOut después del registro con Email/Contraseña
     registerForm.addEventListener("submit", (e) => {
       e.preventDefault();
       registerErrorMsg.textContent = '';
@@ -251,23 +322,21 @@
 
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          window.location.href = "/principal"; // Redirige directamente a la página principal
+          window.location.href = "/principal";
         })
         .catch((error) => {
+          let errorMessage = "Ocurrió un error al registrar la cuenta. Por favor, inténtalo de nuevo.";
           if (error.code === 'auth/email-already-in-use') {
-            registerErrorMsg.textContent = "El correo ya está registrado.";
+            errorMessage = "Este correo electrónico ya está registrado. Intenta iniciar sesión.";
           } else if (error.code === 'auth/invalid-email') {
-            registerErrorMsg.textContent = "Correo no válido.";
+            errorMessage = "El formato del correo electrónico no es válido.";
           } else if (error.code === 'auth/weak-password') {
-            registerErrorMsg.textContent = "Contraseña demasiado débil.";
-          } else {
-            registerErrorMsg.textContent = error.message;
+            errorMessage = "La contraseña es demasiado débil. Debe tener al menos 6 caracteres.";
           }
+          registerErrorMsg.textContent = errorMessage;
         });
     });
-
   </script>
 
 </body>
-<div class="background-blur"></div>
 </html>
