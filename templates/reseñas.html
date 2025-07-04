@@ -1015,9 +1015,30 @@ body::-webkit-scrollbar-thumb:hover {
 
         // Datos de lugares turísticos
         const lugares = {
-            "{{ translate('Huarihuilca') }}": { coords: [-12.0825, -75.2105], accesibles: 5, anio: 2025, imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WARIWILLKA_ARBOLES_DE_MOLLE.png/800px-WARIWILLKA_ARBOLES_DE_MOLLE.png", reseña: "{{ translate('Una antigua ciudadela andina con arquitectura impresionante.') }}" },
-            "{{ translate('Cerrito La Libertad') }}": { coords: [-12.0572, -75.2063], accesibles: 3, anio: 2025, imagen: "https://consultasenlinea.mincetur.gob.pe/fichaInventario//foto.aspx?cod=569569", reseña: "{{ translate('Un mirador que ofrece vistas panorámicas espectaculares.') }}" },
-            "{{ translate('Iglesia Santo Cura de Ars') }}": { coords: [-12.0612, -75.2045], accesibles: 6, anio: 2025, imagen: "{{ url_for('static', filename='imagenes/iglesia.jpg') }}", reseña: "{{ translate('Un lugar de culto con historia y belleza arquitectónica.') }}" }
+            "{{ translate('Huarihuilca') }}": {
+                coords: [-12.0825, -75.2105],
+                accesibles: 5,
+                anio: 2025,
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WARIWILLKA_ARBOLES_DE_MOLLE.png/800px-WARIWILLKA_ARBOLES_DE_MOLLE.png",
+                reseña: "{{ translate('Una antigua ciudadela andina con arquitectura impresionante.') }}",
+                accesibilidadInfo: "{{ translate('Este sitio cuenta con rampas de acceso en la mayoría de sus áreas principales y baños adaptados. Se recomienda asistencia para personas con movilidad muy reducida debido a terrenos irregulares en algunas zonas.') }}"
+            },
+            "{{ translate('Cerrito La Libertad') }}": {
+                coords: [-12.0572, -75.2063],
+                accesibles: 3,
+                anio: 2025,
+                imagen: "https://consultasenlinea.mincetur.gob.pe/fichaInventario//foto.aspx?cod=569569",
+                reseña: "{{ translate('Un mirador que ofrece vistas panorámicas espectaculares.') }}",
+                accesibilidadInfo: "{{ translate('El acceso al mirador principal es a través de escaleras. No cuenta con rampas ni ascensores. La vista desde la base es limitada. No es apto para sillas de ruedas.') }}"
+            },
+            "{{ translate('Iglesia Santo Cura de Ars') }}": {
+                coords: [-12.0612, -75.2045],
+                accesibles: 6,
+                anio: 2025,
+                imagen: "{{ url_for('static', filename='imagenes/iglesia.jpg') }}",
+                reseña: "{{ translate('Un lugar de culto con historia y belleza arquitectónica.') }}",
+                accesibilidadInfo: "{{ translate('La entrada principal tiene una rampa de acceso. El interior es espacioso y permite el desplazamiento con silla de ruedas, aunque los baños no están completamente adaptados.') }}"
+            }
         };
 
         // Inicializar mapa con Leaflet
@@ -1040,6 +1061,7 @@ body::-webkit-scrollbar-thumb:hover {
                             <p>${data.reseña}</p>
                             <p><strong>{{ translate('Año:') }}</strong> ${data.anio}</p>
                             <p><strong>{{ translate('Lugares accesibles:') }}</strong> ${data.accesibles}</p>
+                            <p><strong>{{ translate('Información de Accesibilidad:') }}</strong> ${data.accesibilidadInfo}</p>
                         </div>
                     `)
                     .openOn(map);
@@ -1072,7 +1094,8 @@ body::-webkit-scrollbar-thumb:hover {
 
             const data = {
                 lugar,
-                visitas: parseInt(document.getElementById("visitas").value),
+                // Si "visitas" no existe en el formulario, es mejor no incluirlo o darle un valor por defecto.
+                // visitas: parseInt(document.getElementById("visitas").value), // Comentado si no hay campo de visitas
                 accesibles: parseInt(document.getElementById("accesibles").value),
                 anio: parseInt(document.getElementById("anio").value),
                 accesibilidad,
@@ -1108,7 +1131,10 @@ body::-webkit-scrollbar-thumb:hover {
 
         function limpiarFormulario() {
             document.getElementById("formResena").reset();
-            ["nombreLugar", "visitas", "accesibles", "anio"].forEach(id => document.getElementById(id).value = "");
+            // Asegúrate de que "visitas" solo se limpie si existe el campo en el HTML
+            const idsToClear = ["nombreLugar", "accesibles", "anio"];
+            // if (document.getElementById("visitas")) idsToClear.push("visitas"); // Comentado si no hay campo de visitas
+            idsToClear.forEach(id => document.getElementById(id).value = "");
         }
 
         function renderEstrellas(cantidad) {
