@@ -929,11 +929,6 @@ body::-webkit-scrollbar-thumb:hover {
                 </div>
 
                 <div class="form-group">
-                    <label for="visitas"><i class="fas fa-users"></i> {{ translate('Visitas:') }}</label>
-                    <input type="number" id="visitas" readonly />
-                </div>
-
-                <div class="form-group">
                     <label for="accesibles"><i class="fas fa-wheelchair"></i> {{ translate('Lugares accesibles:') }}</label>
                     <input type="number" id="accesibles" readonly />
                 </div>
@@ -1034,7 +1029,6 @@ body::-webkit-scrollbar-thumb:hover {
             const marker = L.marker(data.coords).addTo(map);
             marker.on("click", () => {
                 document.getElementById("nombreLugar").value = nombre;
-                document.getElementById("visitas").value = Math.floor(Math.random() * (1750 - 1100 + 1)) + 1100;
                 document.getElementById("accesibles").value = data.accesibles;
                 document.getElementById("anio").value = data.anio;
                 L.popup()
